@@ -21,7 +21,6 @@ from database import changepass
 from datetime import datetime,timedelta
 from mailtemplates import mails
 import os
-from emails import sendmailprod
 import pytz
 
 app2 = Flask(__name__)
@@ -48,8 +47,7 @@ def login():
         email_body={"recipientmail":email,
                     "subject":"Login Activity Mail",
                     "body":mails["Login"].format(name=name,time_string=time_string)}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         return jsonify({'message': 'Login successful', 'user_info': user_info})
     else:
@@ -66,8 +64,7 @@ def logout():
                 "subject":"Logout Activity Mail",
                 "body":mails["Logout"].format(name=name,time_string=time_string)
                 }
-    # updateemailscoll(email_body)
-    sendmailprod(email_body)
+    updateemailscoll(email_body)
     
     session["username"]=None
     session["user_info"]=None
@@ -114,15 +111,13 @@ def givetasks():
         email_body={"recipientmail":emailstaff,
                     "subject":"Task Assignment Mail",
                     "body":mails["Taskassignedstaff"].format(namestaff=namestaff,time_string=time_string,taskid=data["taskid"],taskname=data["taskname"],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
-    
+        updateemailscoll(email_body)
+        
         emailmanager,namemanager=getemailaddr(session["username"])
         email_body={"recipientmail":emailmanager,
                     "subject":"Task Assigned Confirmation Mail",
                     "body":mails["Taskassignedmanager"].format(namemanager=namemanager,time_string=time_string,namestaff=namestaff,taskid=data["taskid"],taskname=data["taskname"],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
     
     return {"Status":response}
 
@@ -139,15 +134,13 @@ def updatetaskstatusstaff():
         email_body={"recipientmail":emailstaff,
                     "subject":"Task Sent For Approval",
                     "body":mails["Updatetaskstatusstaff"].format(namestaff=namestaff,repmanager=data["repmanager"],time_string=time_string,taskid=data['taskid'],taskname=data['taskname'],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'],addnotes=data['addnotes'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         emailmanager,namemanager=getemailaddr(data["repmanager"])
         email_body={"recipientmail":emailmanager,
                     "subject":"Task Approval Request Mail",
                     "body":mails["Updatetaskstatusmanager"].format(namemanager=namemanager,time_string=time_string,namestaff=namestaff,taskid=data['taskid'],taskname=data['taskname'],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'],addnotes=data['addnotes'],status=data['status'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
     
     return {"Status":response}
 
@@ -176,15 +169,13 @@ def leaveapproval():
         email_body={"recipientmail":emailstaff,
                     "subject":"Leave Request Confiration Mail",
                     "body":mails["Leaverequeststaff"].format(namestaff=namestaff,repmanager=data['repmanager'],time_string=time_string,leaveid=data['leaveid'],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'],typeofleave=data['typeofleave'],leaveduration=data['leaveduration'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         emailmanager,namemanager=getemailaddr(data["repmanager"])
         email_body={"recipientmail":emailmanager,
                     "subject":"Leave Approval Request Mail",
                     "body":mails["Leaverequestmanager"].format(namemanager=namemanager,namestaff=namestaff,time_string=time_string,leaveid=data['leaveid'],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'],typeofleave=data['typeofleave'],leaveduration=data['leaveduration'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
     return {"Status":response}
 
@@ -201,16 +192,13 @@ def sendapprovalstatus():
         email_body={"recipientmail":emailstaff,
                     "subject":"Task Approval Confiration Mail",
                     "body":mails["Taskapprovalstaff"].format(namestaff=namestaff,username=session['username'],time_string=time_string,taskid=data['taskid'],taskname=data['taskname'],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'],addnotes=data['addnotes'],status=data['status'],approvalstatus=data['approvalstatus'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         emailmanager,namemanager=getemailaddr(session["username"])
         email_body={"recipientmail":emailmanager,
                     "subject":"Task Approval Confiration Mail",
                     "body":mails["Taskapprovalmanager"].format(namemanager=namemanager,namestaff=namestaff,username=session['username'],time_string=time_string,taskid=data['taskid'],taskname=data['taskname'],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'],addnotes=data['addnotes'],status=data['status'],approvalstatus=data['approvalstatus'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
-
+        updateemailscoll(email_body)
     else:
         current_time = datetime.now()
         time_string = current_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -219,15 +207,13 @@ def sendapprovalstatus():
         email_body={"recipientmail":emailstaff,
                     "subject":"Task Disapproval Mail",
                     "body":mails["Taskapprovalstaff"].format(namestaff=namestaff,username=session['username'],time_string=time_string,taskid=data['taskid'],taskname=data['taskname'],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'],addnotes=data['addnotes'],status=data['status'],approvalstatus=data['approvalstatus'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         emailmanager,namemanager=getemailaddr(session["username"])
         email_body={"recipientmail":emailmanager,
                     "subject":"Task Disapproval Mail",
                     "body":mails["Taskapprovalmanager"].format(namemanager=namemanager,namestaff=namestaff,username=session['username'],time_string=time_string,taskid=data['taskid'],taskname=data['taskname'],startdate=data['startdate'],enddate=data['enddate'],notes=data['notes'],addnotes=data['addnotes'],status=data['status'],approvalstatus=data['approvalstatus'])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
             
     return {"Status":response}
 
@@ -244,16 +230,13 @@ def sendleaveapprovalstatus():
         email_body={"recipientmail":emailstaff,
                     "subject":"Leave Approval Confiration Mail",
                     "body":mails["Leaveapprovalstaff"].format(namestaff=namestaff,username=session['username'],time_string=time_string,leaveid=data["leaveid"],startdate=data["startdate"],enddate=data["enddate"],notes=data["notes"],leaveduration=data["leaveduration"],requestdate=data["requestdate"],approvalstatus=data["approvalstatus"])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         emailmanager,namemanager=getemailaddr(session["username"])
         email_body={"recipientmail":emailmanager,
                     "subject":"Leave Approval Confiration Mail",
                     "body":mails["Leaveapprovalmanager"].format(namemanager=namemanager,namestaff=namestaff,empid=data["empid"],time_string=time_string,leaveid=data["leaveid"],startdate=data["startdate"],enddate=data["enddate"],notes=data["notes"],leaveduration=data["leaveduration"],requestdate=data["requestdate"],approvalstatus=data["approvalstatus"])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
-
+        updateemailscoll(email_body)
     else:
         current_time = datetime.now()
         time_string = current_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -262,15 +245,13 @@ def sendleaveapprovalstatus():
         email_body={"recipientmail":emailstaff,
                     "subject":"Leave Disapproval Confiration Mail",
                     "body":mails["Leaveapprovalstaff"].format(namestaff=namestaff,username=session['username'],time_string=time_string,leaveid=data["leaveid"],startdate=data["startdate"],enddate=data["enddate"],notes=data["notes"],leaveduration=data["leaveduration"],requestdate=data["requestdate"],approvalstatus=data["approvalstatus"])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         emailmanager,namemanager=getemailaddr(session["username"])
         email_body={"recipientmail":emailmanager,
                     "subject":"Leave Disapproval Confiration Mail",
                     "body":mails["Leaveapprovalmanager"].format(namemanager=namemanager,namestaff=namestaff,empid=data["empid"],time_string=time_string,leaveid=data["leaveid"],startdate=data["startdate"],enddate=data["enddate"],notes=data["notes"],leaveduration=data["leaveduration"],requestdate=data["requestdate"],approvalstatus=data["approvalstatus"])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
     
     return {"Status":response}
 
@@ -287,15 +268,13 @@ def updatetaskdetail1():
         email_body={"recipientmail":emailstaff,
                     "subject":"Task Details Updation Mail",
                     "body":mails["Taskdetailsupdatestaff"].format(namestaff=namestaff,taskname1=data["taskname"],username=session["username"],time_string=time_string,taskid=data["taskid"],taskname2=data["taskname"],startdate=data["startdate"],enddate=data["enddate"],notes=data["notes"],status=data["status"])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         emailmanager,namemanager=getemailaddr(session["username"])
         email_body={"recipientmail":emailmanager,
                     "subject":"Task Details Updation Mail",
                     "body":mails["Taskdetailsupdatemanager"].format(namemanager=namemanager,taskname1=data["taskname"],namestaff=namestaff,empid=data["empid"],time_string=time_string,taskid=data["taskid"],taskname2=data["taskname"],startdate=data["startdate"],enddate=data["enddate"],notes=data["notes"],status=data["status"])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
     
     return {"Status":response}
 
@@ -323,16 +302,14 @@ def submitpullreq():
                 "subject":"Pull Request Recieved",
                 "body":mails["Pullrequestcurrentmanager"].format(name=name,requestingmanager1=data["requestingmanager"],time_string=time_string,empid=data["empid"],requestingmanager2=data["requestingmanager"])
                 }
-    # updateemailscoll(email_body)
-    sendmailprod(email_body)
+    updateemailscoll(email_body)
     
     email,name=getemailaddr(data["requestingmanager"])
     email_body={"recipientmail":email,
                 "subject":"Pull Request Sent",
                 "body":mails["Pullrequestreportingmanager"].format(name=name,currentrepmanager1=data["currentrepmanager"],time_string=time_string,empid=data["empid"],currentrepmanager2=data["currentrepmanager"])
                 }
-    # updateemailscoll(email_body)
-    sendmailprod(email_body)
+    updateemailscoll(email_body)
     
     return response
 
@@ -350,24 +327,21 @@ def submitpullreqapp():
                 "subject":"Pull Request Approved",
                 "body":mails["Pullrequestapprcurrmanager"].format(name=name,empid1=data["empid"],time_string=time_string,empid2=data["empid"],requestingmanager=data["requestingmanager"],requestdate=data["requestdate"])
                 }
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         email,name=getemailaddr(data["requestingmanager"])
         email_body={"recipientmail":email,
                 "subject":"Pull Request Approved",
                 "body":mails["Pullrequestapprrepmanager"].format(name=name,empid1=data["empid"],username1=session["username"],time_string=time_string,empid2=data["empid"],username2=session["username"],requestdate=data["requestdate"])
                 }
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
         
         email,name=getemailaddr(data["empid"])
         email_body={"recipientmail":email,
                 "subject":"Manager Changed",
                 "body":mails["Pullrequestemp"].format(name=name,username=session["username"],requestingmanager=data["requestingmanager"])
                 }
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
     
     else:
         current_time = datetime.now()
@@ -377,16 +351,14 @@ def submitpullreqapp():
         email_body={"recipientmail":email,
                 "subject":"Pull Request Dispproved",
                 "body":mails["Pullreqcurrmanager"].format(name=name,empid1=data["empid"],time_string=time_string,empid2=data["empid"],requestingmanager=data["requestingmanager"],requestdate=data["requestdate"])}
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
 
         email,name=getemailaddr(data["requestingmanager"])
         email_body={"recipientmail":email,
                 "subject":"Pull Request Disapproved",
                 "body":mails["Pullreqrepmanager"].format(name=name,empid1=data["empid"],username1=session["username"],time_string=time_string,empid2=data["empid"],username2=session["username"],requestdate=data["requestdate"])
                 }
-        # updateemailscoll(email_body)
-        sendmailprod(email_body)
+        updateemailscoll(email_body)
     
     return response
 
@@ -400,9 +372,7 @@ def sendmails():
             email_body={"recipientmail":email,
                         "subject":data["subject"],
                         "body":data["emailbody"]}
-            # updateemailscoll(email_body)
-            sendmailprod(email_body)
-
+            updateemailscoll(email_body)
             status="True"
     except Exception as e:
         print("Err Occ: ",e)
@@ -417,15 +387,13 @@ def submitempinfo():
     email_body={"recipientmail":emailstaff,
                 "subject":"Congratulations account created",
                 "body":mails["Acccreatedstaff"].format(namestaff=namestaff,empid=data["empid"])}
-    # updateemailscoll(email_body)
-    sendmailprod(email_body)
+    updateemailscoll(email_body)
     
     emailadmin,nameadmin=getemailaddr(session["username"])
     email_body={"recipientmail":emailadmin,
                 "subject":f"Account creation successfull mail",
                 "body":mails["Acccreatedmanager"].format(nameadmin=nameadmin,namestaff=namestaff,empid=data["empid"])}
-    # updateemailscoll(email_body)
-    sendmailprod(email_body)
+    updateemailscoll(email_body)
 
     return response
     
@@ -450,8 +418,7 @@ def forgotpass():
         email_body={"recipientmail":emailstaff,
                     "subject":"Code for password change",
                     "body":f"Hey {namestaff}, code for changing password is {code}"}
-        # updateemailscoll(email_body) 
-        sendmailprod(email_body)
+        updateemailscoll(email_body) 
     
     return response
 
@@ -469,9 +436,7 @@ def changepassword():
             email_body={"recipientmail":emailstaff,
                         "subject":"Password Changed",
                         "body":mails["Passchanged"].format(namestaff=namestaff,empid=data["empid"],time_string=time_string)}
-            # updateemailscoll(email_body)
-            sendmailprod(email_body)
-
+            updateemailscoll(email_body)
         return response
     else:
         return {"Status":"Code not matched"}
