@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Popup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css//popup.css') }}">
+    <script src="{{ url_for('static', filename='js//popuppullreq.js') }}"></script>
+
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <div class="inner-container-span">
+            <span>Resource</span>
+            <span>Requesting Person</span>
+            <span>Request Date</span>
+            <span>Approve/Disapprove</span>
+        </div>
+        <div class="inner-container-input">
+            <input type="text" id="empid" readonly>
+            <input type="text" id="requestingperson" readonly>
+            <input type="text" id="reqdate" readonly>
+            <select id="approvalstatus">
+                <option>Approve</option>
+                <option>Disapprove</option>
+            </select>
+        </div>
+    </div>
+    <button id="submitbtn" onclick="sendpullreq()">SUBMIT</button>
+</body>
+
+</html>

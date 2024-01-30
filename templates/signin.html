@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css//stylessignup.css') }}">
+    <script src="{{ url_for('static', filename='js//login_logout_homepage.js') }}"></script>
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+    <div class="container">
+        <h1>Welcome To A2</h1>
+        <form class="search-form" id="search-form" autocomplete="off">
+            <div id="messageContainer" class="message-container">
+                <span id="msg">Enter Atleast Two Of The Three Fields. UserName Is Must</span> <span class="close-button"
+                    onclick="closeMessage()">x</span>
+            </div>
+            <label>Enter Your UserName</label>
+            <input type="text" id="username" required>
+
+            <label id="passlabel">Enter Your Password</label>
+            <input type="password" id="password" required>
+
+            <label id="emaillabel" style="display: none;">Enter Email Address</label>
+            <input type="email" id="email" required style="display: none;">
+
+            <label id="doblabel" style="display: none;">Enter Date Of Birth</label>
+            <input type="date" id="dob" required style="display: none;">
+
+            <label id="codelabel" style="display: none;">Enter Code Recieved On Email</label>
+            <input type="text" id="code" required style="display: none;">
+
+            <label id="newpasslabel" style="display: none;">Enter New Password</label>
+            <input type="password" id="newpass" required style="display: none;">
+
+            <button type="button" id="signin" onclick="signIN()">Signin</button>
+            <button type="button" id="forgotpass" onclick="forgotpassword()">Forgot Password</button>
+            <button type="button" id="back" style="display: none;" onclick="goback()">Back</button>
+            <button type="button" id="submit" style="display: none;" onclick="submitbtn()">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

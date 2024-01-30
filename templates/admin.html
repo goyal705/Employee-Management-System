@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css//homepagesytle.css') }}">
+    <script src="{{ url_for('static', filename='js//adminjs.js') }}"></script>
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="container">
+
+        <div class="header">
+            <div class="header-header">WELCOME TO A2</div>
+            <div class="header-info" id="userinfo"></div>
+            <img src="{{ url_for('static', filename='logout.png') }}" onclick="logout()" class="logoutimg">
+        </div>
+        <div class="boxcontainer">
+            <div class="box-container">
+
+                <div class="box" id="box-personal-info" onclick="addemployee()">
+                    ADD EMPLOYEE
+                </div>
+
+                <div class="box" id="box-apply-leaves" onclick="removeemployee()">
+                    REMOVE EMPLOYEE
+                </div>
+
+                <div class="box" id="box-view-tasks" onclick="sendmail()">
+                    <span>SEND MAIL</span>
+                </div>
+
+                <div class="box" id="box-view-tasks" onclick="approverequests()">
+                    <span>APPROVE REQUESTS</span>
+                    <p id="notification"></p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="content-container" id="content-container">
+
+        </div>
+    </div>
+</body>
+
+</html>

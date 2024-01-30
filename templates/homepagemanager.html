@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css//homepagesytle.css') }}">
+    <script src="{{ url_for('static', filename='js//homepagemanagerjs.js') }}"></script>
+    <script src="{{ url_for('static', filename='js//homepagemanagerjs2.js') }}"></script>
+    <script src="{{ url_for('static', filename='js//sessionexpire.js') }}"></script>
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+    <div class="container">
+
+        <div class="header">
+            <div class="header-header">WELCOME TO A2</div>
+            <div class="header-info" id="userinfo"></div>
+            <img src="{{ url_for('static', filename='logout.png') }}" onclick="logout()" class="logoutimg">
+
+        </div>
+        <div class="boxcontainer">
+            <div class="box-container">
+
+                <div class="box" id="box-personal-info" onclick="insertpersonalinfo()">
+                    PERSONAL INFORMATION
+                </div>
+
+                <div class="box" id="box-apply-leaves" onclick="insertleaves()">
+                    APPLY LEAVES
+                </div>
+
+                <div class="box" id="box-view-tasks" onclick="approverequests()">
+                    <span>APPROVE REQUESTS</span>
+                    <p id="notification"></p>
+                </div>
+
+                <div class="box" id="box-assign-tasks" onclick="assigntasks()">
+                    ASSIGN TASKS
+                </div>
+
+                <div class="box" id="box-pull-resource" onclick="pullresource()">
+                    PULL RESOURCE
+                </div>
+
+                <div class="box" id="box-tasks-progress" onclick="viewtasksprogress()">
+                    VIEW TASKS PROGRESS
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container" id="content-container">
+
+        </div>
+    </div>
+</body>
+
+</html>

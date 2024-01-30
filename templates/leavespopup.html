@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Popup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css//popup.css') }}">
+    <script src="{{ url_for('static', filename='js//popupleaves.js') }}"></script>
+
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <div class="inner-container-span">
+            <span>EmpId</span>
+            <span>LeaveId</span>
+            <span>Request Date</span>
+            <span>Start Date</span>
+            <span>End Date</span>
+            <span>Partial Days</span>
+            <span>Type Of Leave</span>
+            <span>Leave Duration</span>
+            <span>Notes</span>
+            <span>Approve/Disapprove</span>
+        </div>
+        <div class="inner-container-input">
+            <input type="text" id="empid" readonly>
+            <input type="text" id="leaveid" readonly>
+            <input type="date" id="requestdate" readonly>
+            <input type="date" id="startdate" readonly>
+            <input type="date" id="enddate" readonly>
+            <input type="text" id="partialdays" readonly>
+            <input type="text" id="typeofleave" readonly>
+            <input type="text" id="leaveduration" readonly>
+            <input type="text" id="notes" readonly>
+            <select id="approvalstatus">
+                <option>Approve</option>
+                <option>Disapprove</option>
+            </select>
+        </div>
+    </div>
+    <button id="submitbtn" onclick="sendleaveapproval()">SUBMIT</button>
+</body>
+
+</html>

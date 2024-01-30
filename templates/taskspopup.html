@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Popup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css//popup.css') }}">
+    <script src="{{ url_for('static', filename='js//popuptasks.js') }}"></script>
+
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <div class="inner-container-span">
+            <span>EmpId</span>
+            <span>TaskId</span>
+            <span>Task Name</span>
+            <span>Start Date</span>
+            <span>End Date</span>
+            <span>Notes1</span>
+            <span>Current Status</span>
+            <span>Notes2</span>
+            <span>Approve/Disapprove</span>
+        </div>
+        <div class="inner-container-input">
+            <input type="text" id="empid" readonly>
+            <input type="text" id="taskid" readonly>
+            <input type="text" id="taskname" readonly>
+            <input type="date" id="startdate" readonly>
+            <input type="date" id="enddate" readonly>
+            <input type="text" id="notes1" readonly>
+            <input type="text" id="currentstatus" readonly>
+            <input type="text" id="notes2" readonly>
+            <select id="approvalstatus">
+                <option>Approve</option>
+                <option>Disapprove</option>
+            </select>
+        </div>
+    </div>
+    <button id="submitbtn" onclick="sendtaskapproval()">SUBMIT</button>
+</body>
+
+</html>
